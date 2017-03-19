@@ -4,7 +4,9 @@
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
 
-FROM debian:jessie
+FROM resin/armv7hf-debian-qemu
+
+RUN [ "cross-build-start" ]
 
 # persistent / runtime deps
 ENV PHPIZE_DEPS \
@@ -210,6 +212,8 @@ RUN set -xe \
 # https://github.com/docker-library/php/issues/443
 	&& pecl update-channels \
 	&& rm -rf /tmp/pear ~/.pearrc
+
+RUN [ "cross-build-end" ]
 
 COPY docker-php-ext-* docker-php-entrypoint /usr/local/bin/
 
